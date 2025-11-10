@@ -1,0 +1,86 @@
+// lib/mock_data.dart
+
+import 'student.dart';
+
+final List<Student> mockStudents = [
+  Student(
+    name: 'Zaladria',
+    imageUrl: 'https://picsum.photos/seed/zaladria/200/300',
+    attributes: {
+      'Força de Vontade': 8,
+      'Agilidade': 6,
+      'Inteligência': 9,
+      'Sorte': 5,
+      'Carisma': 7,
+      'Stamina': 4,
+      'Magia': 10,
+      'Defesa': 3,
+      'Furtividade': 2,
+      'Cafeína': 8,
+    },
+  ),
+  Student(
+    name: 'Jonas "O Coder Fantasma"',
+    imageUrl: 'https://picsum.photos/seed/jonas/200/300',
+    attributes: {
+      'Força de Vontade': 5,
+      'Agilidade': 9,
+      'Inteligência': 8,
+      'Sorte': 7,
+      'Carisma': 4,
+      'Stamina': 6,
+      'Magia': 8,
+      'Defesa': 5,
+      'Furtividade': 10,
+      'Cafeína': 7,
+    },
+  ),
+  Student(
+    name: 'Beatriz "A Rainha do Debug"',
+    imageUrl: 'https://picsum.photos/seed/beatriz/200/300',
+    attributes: {
+      'Força de Vontade': 9,
+      'Agilidade': 5,
+      'Inteligência': 10,
+      'Sorte': 6,
+      'Carisma': 8,
+      'Stamina': 7,
+      'Magia': 3,
+      'Defesa': 8,
+      'Furtividade': 4,
+      'Cafeína': 9,
+    },
+  ),
+  Student(
+    name: 'Carlos "O Mestre do Copia e Cola"',
+    imageUrl: 'https://picsum.photos/seed/carlos/200/300',
+    attributes: {
+      'Força de Vontade': 3,
+      'Agilidade': 10,
+      'Inteligência': 5,
+      'Sorte': 9,
+      'Carisma': 6,
+      'Stamina': 4,
+      'Magia': 7,
+      'Defesa': 6,
+      'Furtividade': 8,
+      'Cafeína': 5,
+    },
+  ),
+  Student(
+    name: 'Fernanda "A Procrastinadora Profissional"',
+    imageUrl: 'https://picsum.photos/seed/fernanda/200/300',
+    attributes: {
+      'Força de Vontade': 2,
+      'Agilidade': 7,
+      'Inteligência': 6,
+      'Sorte': 10,
+      'Carisma': 9,
+      'Stamina': 3,
+      'Magia': 5,
+      'Defesa': 4,
+      'Furtividade': 9,
+      'Cafeína': 4,
+    },
+  ),
+];
