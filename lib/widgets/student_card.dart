@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grademehard_app/student.dart';
-import 'package:grademehard_app/screens/student_detail_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StudentCard extends StatelessWidget {
   final Student student;
+  final VoidCallback? onTap;
 
-  const StudentCard({super.key, required this.student});
+  const StudentCard({super.key, required this.student, this.onTap});
 
   // Helper function to map attribute names to icons
   IconData _getIconForAttribute(String attribute) {
@@ -41,14 +41,7 @@ class StudentCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => StudentDetailScreen(student: student),
-          ),
-        );
-      },
+      onTap: onTap,
       child: Card(
         clipBehavior: Clip.antiAlias,
         elevation: 8,
