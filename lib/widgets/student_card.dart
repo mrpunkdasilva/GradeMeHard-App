@@ -5,8 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 class StudentCard extends StatelessWidget {
   final Student student;
   final VoidCallback? onTap;
+  final bool enableHero;
 
-  const StudentCard({super.key, required this.student, this.onTap});
+  const StudentCard({
+    super.key,
+    required this.student,
+    this.onTap,
+    this.enableHero = true,
+  });
 
   // Helper function to map attribute names to icons
   IconData _getIconForAttribute(String attribute) {
@@ -40,6 +46,13 @@ class StudentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final imageWidget = Image.network(
+      student.imageUrl,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) =>
+          const Center(child: Icon(Icons.error)),
+    );
+
     return InkWell(
       onTap: onTap,
       child: Card(
@@ -56,15 +69,12 @@ class StudentCard extends StatelessWidget {
             // Image with Hero animation
             Expanded(
               flex: 5,
-              child: Hero(
-                tag: 'student-image-${student.name}',
-                child: Image.network(
-                  student.imageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
-                      const Center(child: Icon(Icons.error)),
-                ),
-              ),
+              child: enableHero
+                  ? Hero(
+                      tag: 'student-image-${student.name}',
+                      child: imageWidget,
+                    )
+                  : imageWidget,
             ),
             // Name
             Padding(
@@ -84,7 +94,7 @@ class StudentCard extends StatelessWidget {
             Divider(color: theme.colorScheme.secondary, height: 1),
             // Attributes Grid
             Expanded(
-              flex: 6,
+              flex: 2,
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Wrap(

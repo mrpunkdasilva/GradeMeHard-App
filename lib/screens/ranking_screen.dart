@@ -32,11 +32,11 @@ class RankingScreen extends StatelessWidget {
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(10.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, // Changed from 2 to 3
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 300.0, // Max width of each item
+          mainAxisExtent: 303.0, // Fixed height of each item
           crossAxisSpacing: 10.0,
           mainAxisSpacing: 10.0,
-          childAspectRatio: 0.65, // Adjusted for the new content
         ),
         itemCount: mockStudents.length,
         itemBuilder: (context, index) {

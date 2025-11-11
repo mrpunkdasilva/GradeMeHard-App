@@ -3,6 +3,7 @@ import 'package:grademehard_app/mock_data.dart';
 import 'package:grademehard_app/student.dart';
 import 'package:grademehard_app/widgets/student_card.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:grademehard_app/screens/group_analysis_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GroupBuilderScreen extends StatefulWidget {
@@ -55,6 +56,7 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isGroupFull = !_group.contains(null);
 
     return Scaffold(
       appBar: AppBar(
@@ -78,14 +80,14 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
             ),
           ),
           Container(
-            height: 150, // Adjusted height for the group panel
+            height: 300, // Adjusted height for the group panel
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 300.0, // Max width of each item
+                mainAxisExtent: 250.0, // Fixed height of each item
                 crossAxisSpacing: 8.0,
                 mainAxisSpacing: 8.0,
-                childAspectRatio: 0.65,
               ),
               itemCount: _group.length,
               itemBuilder: (context, index) {
@@ -96,6 +98,7 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
                 return StudentCard(
                   student: student,
                   onTap: () => _onGroupStudentTapped(index),
+                  enableHero: false, // Disable hero animation here
                 );
               },
             ),
@@ -122,11 +125,11 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(10.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6, // More cards, smaller
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 150.0, // Max width of each item
+                mainAxisExtent: 203.0, // Fixed height of each item
                 crossAxisSpacing: 8.0,
                 mainAxisSpacing: 8.0,
-                childAspectRatio: 0.65,
               ),
               itemCount: mockStudents.length,
               itemBuilder: (context, index) {
@@ -137,9 +140,43 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
                   child: StudentCard(
                     student: student,
                     onTap: () => _onStudentTapped(student),
+                    enableHero: false, // And disable it here too
                   ),
                 );
               },
+            ),
+          ),
+          // Analyze Button
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: theme.colorScheme.secondary,
+                foregroundColor: theme.colorScheme.onSecondary,
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+              ),
+              onPressed: isGroupFull
+                  ? () {
+                      // Navigate to analysis screen
+                      // The cast is safe because we checked with isGroupFull
+                      final fullGroup =
+                          _group.cast<Student>().toList();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              GroupAnalysisScreen(group: fullGroup),
+                        ),
+                      );
+                    }
+                  : null, // Button is disabled if group is not full
+              child: Text(
+                'Analisar Grupo',
+                style: GoogleFonts.cinzel(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ],
