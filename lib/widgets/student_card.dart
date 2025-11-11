@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grademehard_app/student.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class StudentCard extends StatelessWidget {
   final Student student;
@@ -66,15 +67,29 @@ class StudentCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Image with Hero animation
+            // Image with Hero animation and Rank Icon
             Expanded(
               flex: 5,
-              child: enableHero
-                  ? Hero(
-                      tag: 'student-image-${student.name}',
-                      child: imageWidget,
-                    )
-                  : imageWidget,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  enableHero
+                      ? Hero(
+                          tag: 'student-image-${student.name}',
+                          child: imageWidget,
+                        )
+                      : imageWidget,
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: SvgPicture.asset(
+                      'assets/images/ranks/${student.rank}.svg',
+                      width: 40,
+                      height: 40,
+                    ),
+                  ),
+                ],
+              ),
             ),
             // Name
             Padding(
