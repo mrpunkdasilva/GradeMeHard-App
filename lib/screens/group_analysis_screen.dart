@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grademehard_app/student.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class GroupAnalysisScreen extends StatelessWidget {
   final List<Student> group;
@@ -40,7 +41,6 @@ class GroupAnalysisScreen extends StatelessWidget {
     final averageStats = <String, double>{};
     if (group.isEmpty) return averageStats;
 
-    // Get all attribute keys from the first student
     final attributeKeys = group.first.attributes.keys;
 
     for (final key in attributeKeys) {
@@ -50,21 +50,28 @@ class GroupAnalysisScreen extends StatelessWidget {
       }
       averageStats[key] = total / group.length;
     }
-
     return averageStats;
+  }
+
+  String _getRankForScore(double score) {
+    if (score >= 95) return 'ss';
+    if (score >= 85) return 's';
+    if (score >= 75) return 'a';
+    if (score >= 65) return 'b';
+    if (score >= 55) return 'c';
+    if (score >= 45) return 'd';
+    if (score >= 35) return 'e';
+    return 'f';
   }
 
   String _generateFunnyAnalysis(Map<String, double> avgStats) {
     if (avgStats.isEmpty) return "Um grupo vazio... a personificação da procrastinação.";
 
-    // Find highest and lowest stats
     final sortedStats = avgStats.entries.toList()
       ..sort((a, b) => a.value.compareTo(b.value));
     final lowestStat = sortedStats.first;
     final highestStat = sortedStats.last;
 
-    // Generate funny text based on highest and lowest stats
-    // This can be expanded with many more fun combinations!
     if (highestStat.key == 'Sangue de Café' && lowestStat.key == 'Bateria Social') {
       return "Este grupo funciona à base de pura cafeína e desespero. A produtividade é altíssima, mas há um risco de burnout coletivo antes do projeto chegar à v1.";
     }
@@ -74,7 +81,7 @@ class GroupAnalysisScreen extends StatelessWidget {
     if (highestStat.key == 'Chute Certeiro' && lowestStat.key == 'Deadline Drive') {
       return "Este time é a prova de que é melhor ter sorte do que juízo. O projeto será entregue no último minuto, funcionando por um milagre que ninguém consegue explicar.";
     }
-     if (highestStat.key == 'Palestrinha' && lowestStat.key == 'QI de Debug') {
+    if (highestStat.key == 'Palestrinha' && lowestStat.key == 'QI de Debug') {
       return "Mestres da lábia. Vão convencer o professor de que o bug é, na verdade, uma feature inovadora. O código pode não ser dos melhores, mas a nota será altíssima.";
     }
 
@@ -82,12 +89,13 @@ class GroupAnalysisScreen extends StatelessWidget {
   }
   // --- End of Analysis Logic ---
 
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final averageStats = _calculateAverageStats();
     final funnyAnalysis = _generateFunnyAnalysis(averageStats);
+    final totalGroupScore = averageStats.values.fold(0.0, (sum, element) => sum + element);
+    final groupRank = _getRankForScore(totalGroupScore);
 
     return Scaffold(
       appBar: AppBar(
@@ -108,6 +116,43 @@ class GroupAnalysisScreen extends StatelessWidget {
                   funnyAnalysis,
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Group Rank Card
+            Card(
+              color: theme.colorScheme.secondary.withOpacity(0.2),
+              elevation: 8,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/ranks/$groupRank.svg',
+                      width: 60,
+                      height: 60,
+                    ),
+                    const SizedBox(width: 16),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Rank Final do Grupo',
+                          style: GoogleFonts.cinzel(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Score Total: ${totalGroupScore.toStringAsFixed(1)}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -164,7 +209,7 @@ class GroupAnalysisScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 16),
                     Text(
-                      entry.value.toStringAsFixed(1), // Show one decimal place
+                      entry.value.toStringAsFixed(1),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
