@@ -47,4 +47,28 @@ class GroupAnalyzer {
 
     return "Este grupo tem seu maior poder em '${highestStat.key}' e sua maior fraqueza em '${lowestStat.key}'. Um equilíbrio... interessante, para dizer o mínimo.";
   }
+
+  static List<Student> suggestStudentsForImprovement(
+      List<Student> currentGroup, List<Student> allStudents) {
+    if (currentGroup.isEmpty) return [];
+
+    final averageStats = calculateAverageStats(currentGroup);
+    if (averageStats.isEmpty) return [];
+
+    // Identify the lowest average stat key
+    final lowestStatEntry = averageStats.entries.reduce(
+        (a, b) => a.value < b.value ? a : b);
+    final lowestStatKey = lowestStatEntry.key;
+
+    // Filter out students already in the current group
+    final candidates = allStudents
+        .where((student) => !currentGroup.contains(student))
+        .toList();
+
+    candidates.sort((a, b) =>
+        (b.attributes[lowestStatKey] ?? 0)
+            .compareTo(a.attributes[lowestStatKey] ?? 0));
+
+    return candidates.take(3).toList();
+  }
 }

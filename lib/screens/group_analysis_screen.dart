@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:grademehard_app/domain/student.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:grademehard_app/services/group_analyzer.dart'; // Import the new service
+import 'package:grademehard_app/services/group_analyzer.dart';
+import 'package:grademehard_app/mock_data.dart'; // Import mock_data for allStudents
+import 'package:grademehard_app/widgets/student_card.dart'; // Import StudentCard
 
 class GroupAnalysisScreen extends StatelessWidget {
   final List<Student> group;
@@ -46,6 +48,7 @@ class GroupAnalysisScreen extends StatelessWidget {
     final funnyAnalysis = GroupAnalyzer.generateFunnyAnalysis(averageStats);
     final totalGroupScore = averageStats.values.fold(0.0, (sum, element) => sum + element);
     final groupRank = GroupAnalyzer.getRankForScore(totalGroupScore);
+    final suggestedStudents = GroupAnalyzer.suggestStudentsForImprovement(group, mockStudents);
 
     return Scaffold(
       appBar: AppBar(
@@ -169,6 +172,44 @@ class GroupAnalysisScreen extends StatelessWidget {
                 );
               },
             ),
+            const SizedBox(height: 24),
+
+            // Suggested Students Section
+            if (suggestedStudents.isNotEmpty) ...[
+              Text(
+                'Sugestões para Melhorar o Grupo',
+                style: GoogleFonts.cinzel(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.secondary,
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 200, // Height for the horizontal list of suggested students
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  itemCount: suggestedStudents.length,
+                  itemBuilder: (context, index) {
+                    final student = suggestedStudents[index];
+                    return SizedBox(
+                      width: 150, // Width of the suggested student cards
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: StudentCard(
+                          student: student,
+                          enableHero: false, // Disable hero for suggestions
+                          onTap: () {
+                            // Optionally navigate to student detail or add to group
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ],
         ),
       ),
