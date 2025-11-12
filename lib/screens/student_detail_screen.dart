@@ -3,6 +3,7 @@ import 'package:grademehard_app/domain/student.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grademehard_app/screens/attributes_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grademehard_app/screens/student_discussion_screen.dart'; // Import the new discussion screen
 
 class StudentDetailScreen extends StatelessWidget {
   final Student student;
@@ -147,6 +148,18 @@ class StudentDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StudentDiscussionScreen(student: student),
+            ),
+          );
+        },
+        label: Text('Discutir', style: GoogleFonts.cinzel()),
+        icon: const Icon(Icons.chat_bubble_outline),
       ),
     );
   }
