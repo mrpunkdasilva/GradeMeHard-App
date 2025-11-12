@@ -4,7 +4,7 @@ import 'package:grademehard_app/screens/attributes_screen.dart';
 import 'package:grademehard_app/screens/group_builder_screen.dart';
 import 'package:grademehard_app/screens/ranks_explained_screen.dart';
 import 'package:grademehard_app/screens/student_detail_screen.dart';
-import 'package:grademehard_app/student.dart';
+import 'package:grademehard_app/domain/student.dart';
 import 'package:grademehard_app/widgets/student_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';

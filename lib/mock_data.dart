@@ -1,7 +1,7 @@
 // lib/mock_data.dart
 
 import 'dart:math';
-import 'student.dart';
+import 'package:grademehard_app/domain/student.dart';
 
 final _random = Random();
 

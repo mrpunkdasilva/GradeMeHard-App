@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grademehard_app/mock_data.dart';
-import 'package:grademehard_app/student.dart';
+import 'package:grademehard_app/domain/student.dart';
 import 'package:grademehard_app/widgets/student_card.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:grademehard_app/screens/group_analysis_screen.dart';

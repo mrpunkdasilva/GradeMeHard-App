@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grademehard_app/student.dart';
+import 'package:grademehard_app/domain/student.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

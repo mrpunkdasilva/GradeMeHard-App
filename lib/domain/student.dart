@@ -1,5 +1,8 @@
 // lib/student.dart
 
+import 'dart:math';
+import 'package:grademehard_app/domain/rank.dart'; // Import the new Rank enum
+
 class Student {
   final String name;
   final String imageUrl;
@@ -18,14 +21,6 @@ class Student {
 
   // Getter to determine rank based on total score
   String get rank {
-    final score = totalScore;
-    if (score >= 95) return 'ss';
-    if (score >= 85) return 's';
-    if (score >= 75) return 'a';
-    if (score >= 65) return 'b';
-    if (score >= 55) return 'c';
-    if (score >= 45) return 'd';
-    if (score >= 35) return 'e';
-    return 'f';
+    return Rank.fromScore(totalScore.toDouble()).name;
   }
 }

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:grademehard_app/student.dart';
+import 'package:grademehard_app/domain/student.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grademehard_app/services/group_analyzer.dart'; // Import the new service
 
 class GroupAnalysisScreen extends StatelessWidget {
   final List<Student> group;
 
   const GroupAnalysisScreen({super.key, required this.group});
 
-  // Helper to get an icon for an attribute
+  // Helper to get an icon for an attribute (this remains here as it's UI related)
   IconData _getIconForAttribute(String attribute) {
     switch (attribute) {
       case 'Deadline Drive':
@@ -36,66 +37,15 @@ class GroupAnalysisScreen extends StatelessWidget {
     }
   }
 
-  // --- Analysis Logic ---
-  Map<String, double> _calculateAverageStats() {
-    final averageStats = <String, double>{};
-    if (group.isEmpty) return averageStats;
-
-    final attributeKeys = group.first.attributes.keys;
-
-    for (final key in attributeKeys) {
-      double total = 0;
-      for (final student in group) {
-        total += student.attributes[key] ?? 0;
-      }
-      averageStats[key] = total / group.length;
-    }
-    return averageStats;
-  }
-
-  String _getRankForScore(double score) {
-    if (score >= 95) return 'ss';
-    if (score >= 85) return 's';
-    if (score >= 75) return 'a';
-    if (score >= 65) return 'b';
-    if (score >= 55) return 'c';
-    if (score >= 45) return 'd';
-    if (score >= 35) return 'e';
-    return 'f';
-  }
-
-  String _generateFunnyAnalysis(Map<String, double> avgStats) {
-    if (avgStats.isEmpty) return "Um grupo vazio... a personificação da procrastinação.";
-
-    final sortedStats = avgStats.entries.toList()
-      ..sort((a, b) => a.value.compareTo(b.value));
-    final lowestStat = sortedStats.first;
-    final highestStat = sortedStats.last;
-
-    if (highestStat.key == 'Sangue de Café' && lowestStat.key == 'Bateria Social') {
-      return "Este grupo funciona à base de pura cafeína e desespero. A produtividade é altíssima, mas há um risco de burnout coletivo antes do projeto chegar à v1.";
-    }
-    if (highestStat.key == 'QI de Debug' && lowestStat.key == 'Palestrinha') {
-      return "Uma equipe de gênios introvertidos. O código será brilhante, mas a apresentação do projeto será feita em monossílabos e com muito contato visual com o chão.";
-    }
-    if (highestStat.key == 'Chute Certeiro' && lowestStat.key == 'Deadline Drive') {
-      return "Este time é a prova de que é melhor ter sorte do que juízo. O projeto será entregue no último minuto, funcionando por um milagre que ninguém consegue explicar.";
-    }
-    if (highestStat.key == 'Palestrinha' && lowestStat.key == 'QI de Debug') {
-      return "Mestres da lábia. Vão convencer o professor de que o bug é, na verdade, uma feature inovadora. O código pode não ser dos melhores, mas a nota será altíssima.";
-    }
-
-    return "Este grupo tem seu maior poder em '${highestStat.key}' e sua maior fraqueza em '${lowestStat.key}'. Um equilíbrio... interessante, para dizer o mínimo.";
-  }
-  // --- End of Analysis Logic ---
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final averageStats = _calculateAverageStats();
-    final funnyAnalysis = _generateFunnyAnalysis(averageStats);
+
+    // Use the GroupAnalyzer service for logic
+    final averageStats = GroupAnalyzer.calculateAverageStats(group);
+    final funnyAnalysis = GroupAnalyzer.generateFunnyAnalysis(averageStats);
     final totalGroupScore = averageStats.values.fold(0.0, (sum, element) => sum + element);
-    final groupRank = _getRankForScore(totalGroupScore);
+    final groupRank = GroupAnalyzer.getRankForScore(totalGroupScore);
 
     return Scaffold(
       appBar: AppBar(
