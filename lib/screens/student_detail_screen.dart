@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:grademehard_app/student.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:grademehard_app/screens/attributes_screen.dart'; // Import to access descriptions
+import 'package:grademehard_app/screens/attributes_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class StudentDetailScreen extends StatelessWidget {
   final Student student;
@@ -10,7 +11,6 @@ class StudentDetailScreen extends StatelessWidget {
 
   // Helper function to map attribute names to icons
   IconData _getIconForAttribute(String attribute) {
-    // Find the attribute detail from the global list
     final detail = attributeDetails.firstWhere(
       (d) => d.name == attribute,
       orElse: () => AttributeDetail(icon: Icons.help_outline, name: '', description: ''),
@@ -46,25 +46,38 @@ class StudentDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Character Image
+            // Character Image with Rank
             Center(
-              child: Hero(
-                tag: 'student-image-${student.name}', // Unique tag for the animation
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Image.network(
-                    student.imageUrl,
-                    height: 300,
-                    width: 300,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      height: 300,
-                      width: 300,
-                      color: Colors.grey[800],
-                      child: const Icon(Icons.error, color: Colors.red, size: 50),
+              child: Stack(
+                children: [
+                  Hero(
+                    tag: 'student-image-${student.name}',
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Image.network(
+                        student.imageUrl,
+                        height: 300,
+                        width: 300,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          height: 300,
+                          width: 300,
+                          color: Colors.grey[800],
+                          child: const Icon(Icons.error, color: Colors.red, size: 50),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: SvgPicture.asset(
+                      'assets/images/ranks/${student.rank}.svg',
+                      width: 60,
+                      height: 60,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 24),
@@ -111,7 +124,7 @@ class StudentDetailScreen extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: LinearProgressIndicator(
-                          value: attribute.value / 10.0, // Assuming max value is 10
+                          value: attribute.value / 10.0,
                           backgroundColor: Colors.grey.withOpacity(0.3),
                           valueColor: AlwaysStoppedAnimation<Color>(
                             theme.colorScheme.secondary,

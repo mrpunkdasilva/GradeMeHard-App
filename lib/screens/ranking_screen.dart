@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grademehard_app/mock_data.dart';
 import 'package:grademehard_app/screens/attributes_screen.dart';
 import 'package:grademehard_app/screens/group_builder_screen.dart';
+import 'package:grademehard_app/screens/ranks_explained_screen.dart';
 import 'package:grademehard_app/screens/student_detail_screen.dart';
 import 'package:grademehard_app/student.dart';
 import 'package:grademehard_app/widgets/student_card.dart';
@@ -34,6 +35,18 @@ class RankingScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const AttributesScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.emoji_events_outlined),
+            tooltip: 'Guia de Ranks',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const RanksExplainedScreen(),
                 ),
               );
             },
