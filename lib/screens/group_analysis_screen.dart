@@ -3,7 +3,7 @@ import 'package:grademehard_app/domain/student.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grademehard_app/services/group_analyzer.dart';
-import 'package:grademehard_app/mock_data.dart'; // Import mock_data for allStudents
+import 'package:grademehard_app/data/mock_data.dart';
 import 'package:grademehard_app/widgets/student_card.dart'; // Import StudentCard
 
 class GroupAnalysisScreen extends StatelessWidget {

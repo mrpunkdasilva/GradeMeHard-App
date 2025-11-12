@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grademehard_app/mock_data.dart';
+import 'package:grademehard_app/data/mock_data.dart';
 import 'package:grademehard_app/screens/attributes_screen.dart';
 import 'package:grademehard_app/screens/group_builder_screen.dart';
 import 'package:grademehard_app/screens/ranks_explained_screen.dart';
