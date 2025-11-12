@@ -18,25 +18,25 @@ class StudentCard extends StatelessWidget {
   // Helper function to map attribute names to icons
   IconData _getIconForAttribute(String attribute) {
     switch (attribute) {
-      case 'Força de Vontade':
-        return Icons.shield;
-      case 'Agilidade':
-        return Icons.directions_run;
-      case 'Inteligência':
-        return Icons.school;
-      case 'Sorte':
-        return Icons.casino;
-      case 'Carisma':
-        return Icons.star;
-      case 'Stamina':
-        return Icons.favorite;
-      case 'Magia':
-        return Icons.auto_awesome; // A magic wand/sparkles icon
-      case 'Defesa':
-        return Icons.security;
-      case 'Furtividade':
-        return Icons.visibility_off;
-      case 'Cafeína':
+      case 'Deadline Drive':
+        return Icons.alarm;
+      case 'Velocidade Alt+Tab':
+        return Icons.tab;
+      case 'QI de Debug':
+        return Icons.bug_report;
+      case 'Chute Certeiro':
+        return Icons.check_circle_outline;
+      case 'Palestrinha':
+        return Icons.record_voice_over;
+      case 'Bateria Social':
+        return Icons.battery_charging_full;
+      case 'Magia do Excel':
+        return Icons.grid_on;
+      case 'Resistência à Prova':
+        return Icons.book;
+      case 'Saída à Francesa':
+        return Icons.exit_to_app;
+      case 'Sangue de Café':
         return Icons.coffee;
       default:
         return Icons.help_outline;

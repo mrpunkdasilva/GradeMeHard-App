@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grademehard_app/mock_data.dart';
+import 'package:grademehard_app/screens/attributes_screen.dart';
 import 'package:grademehard_app/screens/group_builder_screen.dart';
 import 'package:grademehard_app/screens/student_detail_screen.dart';
 import 'package:grademehard_app/student.dart';
@@ -25,6 +26,18 @@ class RankingScreen extends StatelessWidget {
         title: Text('Ranking de Alunos', style: GoogleFonts.cinzel()),
         centerTitle: true,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: 'Glossário de Atributos',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AttributesScreen(),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.group_add_outlined),
             tooltip: 'Montar Grupo',
@@ -63,9 +76,9 @@ class RankingScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final student = top5Students[index];
                 return SizedBox(
-                  width: 180, // Width of the larger cards for top 5
+                  width: 250, // Width of the larger cards for top 5
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
                     child: StudentCard(
                       student: student,
                       onTap: () {

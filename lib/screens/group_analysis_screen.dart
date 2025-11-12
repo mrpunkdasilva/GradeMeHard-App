@@ -9,27 +9,26 @@ class GroupAnalysisScreen extends StatelessWidget {
 
   // Helper to get an icon for an attribute
   IconData _getIconForAttribute(String attribute) {
-    // (This would be the same helper method from other screens)
     switch (attribute) {
-      case 'Força de Vontade':
-        return Icons.shield;
-      case 'Agilidade':
-        return Icons.directions_run;
-      case 'Inteligência':
-        return Icons.school;
-      case 'Sorte':
-        return Icons.casino;
-      case 'Carisma':
-        return Icons.star;
-      case 'Stamina':
-        return Icons.favorite;
-      case 'Magia':
-        return Icons.auto_awesome;
-      case 'Defesa':
-        return Icons.security;
-      case 'Furtividade':
-        return Icons.visibility_off;
-      case 'Cafeína':
+      case 'Deadline Drive':
+        return Icons.alarm;
+      case 'Velocidade Alt+Tab':
+        return Icons.tab;
+      case 'QI de Debug':
+        return Icons.bug_report;
+      case 'Chute Certeiro':
+        return Icons.check_circle_outline;
+      case 'Palestrinha':
+        return Icons.record_voice_over;
+      case 'Bateria Social':
+        return Icons.battery_charging_full;
+      case 'Magia do Excel':
+        return Icons.grid_on;
+      case 'Resistência à Prova':
+        return Icons.book;
+      case 'Saída à Francesa':
+        return Icons.exit_to_app;
+      case 'Sangue de Café':
         return Icons.coffee;
       default:
         return Icons.help_outline;
@@ -66,16 +65,16 @@ class GroupAnalysisScreen extends StatelessWidget {
 
     // Generate funny text based on highest and lowest stats
     // This can be expanded with many more fun combinations!
-    if (highestStat.key == 'Cafeína' && lowestStat.key == 'Stamina') {
+    if (highestStat.key == 'Sangue de Café' && lowestStat.key == 'Bateria Social') {
       return "Este grupo funciona à base de pura cafeína e desespero. A produtividade é altíssima, mas há um risco de burnout coletivo antes do projeto chegar à v1.";
     }
-    if (highestStat.key == 'Inteligência' && lowestStat.key == 'Carisma') {
+    if (highestStat.key == 'QI de Debug' && lowestStat.key == 'Palestrinha') {
       return "Uma equipe de gênios introvertidos. O código será brilhante, mas a apresentação do projeto será feita em monossílabos e com muito contato visual com o chão.";
     }
-    if (highestStat.key == 'Sorte' && lowestStat.key == 'Força de Vontade') {
+    if (highestStat.key == 'Chute Certeiro' && lowestStat.key == 'Deadline Drive') {
       return "Este time é a prova de que é melhor ter sorte do que juízo. O projeto será entregue no último minuto, funcionando por um milagre que ninguém consegue explicar.";
     }
-     if (highestStat.key == 'Carisma' && lowestStat.key == 'Inteligência') {
+     if (highestStat.key == 'Palestrinha' && lowestStat.key == 'QI de Debug') {
       return "Mestres da lábia. Vão convencer o professor de que o bug é, na verdade, uma feature inovadora. O código pode não ser dos melhores, mas a nota será altíssima.";
     }
 

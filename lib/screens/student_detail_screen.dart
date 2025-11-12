@@ -1,38 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:grademehard_app/student.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grademehard_app/screens/attributes_screen.dart'; // Import to access descriptions
 
 class StudentDetailScreen extends StatelessWidget {
   final Student student;
 
   const StudentDetailScreen({super.key, required this.student});
 
-  // Helper function to map attribute names to icons (copied from StudentCard)
+  // Helper function to map attribute names to icons
   IconData _getIconForAttribute(String attribute) {
-    switch (attribute) {
-      case 'Força de Vontade':
-        return Icons.shield;
-      case 'Agilidade':
-        return Icons.directions_run;
-      case 'Inteligência':
-        return Icons.school;
-      case 'Sorte':
-        return Icons.casino;
-      case 'Carisma':
-        return Icons.star;
-      case 'Stamina':
-        return Icons.favorite;
-      case 'Magia':
-        return Icons.auto_awesome; // A magic wand/sparkles icon
-      case 'Defesa':
-        return Icons.security;
-      case 'Furtividade':
-        return Icons.visibility_off;
-      case 'Cafeína':
-        return Icons.coffee;
-      default:
-        return Icons.help_outline;
-    }
+    // Find the attribute detail from the global list
+    final detail = attributeDetails.firstWhere(
+      (d) => d.name == attribute,
+      orElse: () => AttributeDetail(icon: Icons.help_outline, name: '', description: ''),
+    );
+    return detail.icon;
+  }
+
+  // Helper function to get attribute description
+  String _getAttributeDescription(String attributeName) {
+    final detail = attributeDetails.firstWhere(
+      (d) => d.name == attributeName,
+      orElse: () => AttributeDetail(icon: Icons.help_outline, name: '', description: 'Nenhuma descrição encontrada.'),
+    );
+    return detail.description;
   }
 
   @override
@@ -96,44 +88,47 @@ class StudentDetailScreen extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 final attribute = attributes[index];
-                return Row(
-                  children: [
-                    Icon(
-                      _getIconForAttribute(attribute.key),
-                      color: theme.colorScheme.secondary,
-                      size: 28,
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        attribute.key,
+                return Tooltip(
+                  message: _getAttributeDescription(attribute.key),
+                  child: Row(
+                    children: [
+                      Icon(
+                        _getIconForAttribute(attribute.key),
+                        color: theme.colorScheme.secondary,
+                        size: 28,
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          attribute.key,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: LinearProgressIndicator(
+                          value: attribute.value / 10.0, // Assuming max value is 10
+                          backgroundColor: Colors.grey.withOpacity(0.3),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            theme.colorScheme.secondary,
+                          ),
+                          minHeight: 8,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        '${attribute.value}/10',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: LinearProgressIndicator(
-                        value: attribute.value / 10.0, // Assuming max value is 10
-                        backgroundColor: Colors.grey.withOpacity(0.3),
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          theme.colorScheme.secondary,
-                        ),
-                        minHeight: 8,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Text(
-                      '${attribute.value}/10',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
