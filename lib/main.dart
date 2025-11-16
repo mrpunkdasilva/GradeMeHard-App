@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:grademehard_app/screens/ranking_screen.dart';
+import 'package:grademehard_app/screens/season_start_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Grade Me Hard',
       theme: theme,
-      home: const RankingScreen(),
+      home: const SeasonStartScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
