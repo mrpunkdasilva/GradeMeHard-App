@@ -75,14 +75,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
 
     _votingService.addVote(vote);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Voto para ${widget.student.name} registrado!'),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-      ),
-    );
-
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(widget.student.name);
   }
 
   @override
