@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  grademehard_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: grademehard_app_web
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

@@ -27,7 +27,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
   @override
   void initState() {
     super.initState();
-    _remainingPoints = 10;
+    _remainingPoints = 5;
     _attributePoints = {
       for (var attr in attributeDetails) attr.name: 0
     };
@@ -107,7 +107,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
                 final attribute = attributeDetails[index];
                 final points = _attributePoints[attribute.name]!;
 
-                final canIncrement = points < 10 && _remainingPoints > 0;
+                final canIncrement = points < 5 && _remainingPoints > 0;
                 final canDecrement = points > 0;
 
                 return Card(

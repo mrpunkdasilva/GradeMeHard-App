@@ -1,6 +1,5 @@
 // lib/student.dart
 
-import 'dart:math';
 import 'package:grademehard_app/domain/rank.dart'; // Import the new Rank enum
 
 class Student {

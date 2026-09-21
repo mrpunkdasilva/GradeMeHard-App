@@ -125,7 +125,7 @@ class StudentDetailScreen extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: LinearProgressIndicator(
-                          value: attribute.value / 10.0,
+                          value: attribute.value / 5.0,
                           backgroundColor: Colors.grey.withOpacity(0.3),
                           valueColor: AlwaysStoppedAnimation<Color>(
                             theme.colorScheme.secondary,
@@ -135,7 +135,7 @@ class StudentDetailScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 16),
                       Text(
-                        '${attribute.value}/10',
+                        '${attribute.value}/5',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

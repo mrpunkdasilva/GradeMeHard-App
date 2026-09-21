@@ -5,6 +5,7 @@ import 'package:grademehard_app/data/mock_data.dart';
 import 'package:grademehard_app/domain/student.dart';
 import 'package:grademehard_app/screens/attribute_voting_screen.dart';
 import 'package:grademehard_app/widgets/voting_card.dart';
+import 'package:grademehard_app/screens/ranking_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VotingScreen extends StatefulWidget {
@@ -112,17 +113,52 @@ class _VotingScreenState extends State<VotingScreen> {
       appBar: AppBar(
         title: Text('Votação da Turma', style: GoogleFonts.cinzel()),
         centerTitle: true,
+        actions: [
+          TextButton.icon(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const RankingScreen()),
+              );
+            },
+            icon: const Icon(Icons.exit_to_app),
+            label: const Text('Sair'),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+        ],
       ),
       body: _students.isEmpty
           ? Center(
-              child: Text(
-                'Fim da Votação!',
-                style: GoogleFonts.cinzel(fontSize: 32, fontWeight: FontWeight.bold),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Fim da Votação!',
+                    style: GoogleFonts.cinzel(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const RankingScreen()),
+                      );
+                    },
+                    child: const Text('Ver Ranking'),
+                  ),
+                ],
               ),
             )
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  'Alunos restantes: ${_students.length}',
+                  style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
                 Text(
                   'Deslize para a direita para votar ou para a esquerda para pular.',
                   textAlign: TextAlign.center,

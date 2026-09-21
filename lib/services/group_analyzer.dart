@@ -1,5 +1,4 @@
 import 'package:grademehard_app/domain/student.dart';
-import 'package:flutter/material.dart'; // For IconData, if needed for attribute mapping
 import 'package:grademehard_app/domain/rank.dart'; // Import the new Rank enum
 
 class GroupAnalyzer {
@@ -32,17 +31,17 @@ class GroupAnalyzer {
     final lowestStat = sortedStats.first;
     final highestStat = sortedStats.last;
 
-    if (highestStat.key == 'Sangue de Café' && lowestStat.key == 'Bateria Social') {
-      return "Este grupo funciona à base de pura cafeína e desespero. A produtividade é altíssima, mas há um risco de burnout coletivo antes do projeto chegar à v1.";
+    if (highestStat.key == 'Sangue de Monster' && lowestStat.key == 'Fantasma da Presence') {
+      return "Este grupo funciona à base de Monster e ansiedade. Trabalham muito, mas ninguém aparece na aula. O professor já esqueceu o nome deles.";
     }
-    if (highestStat.key == 'QI de Debug' && lowestStat.key == 'Palestrinha') {
-      return "Uma equipe de gênios introvertidos. O código será brilhante, mas a apresentação do projeto será feita em monossílabos e com muito contato visual com o chão.";
+    if (highestStat.key == 'Ctrl+Z Humano' && lowestStat.key == 'Foguete no Cronograma') {
+      return "Mestres do improviso. Entregam tudo no último minuto, mas sempre tem um herói que conserta antes da apresentação.";
     }
-    if (highestStat.key == 'Chute Certeiro' && lowestStat.key == 'Deadline Drive') {
-      return "Este time é a prova de que é melhor ter sorte do que juízo. O projeto será entregue no último minuto, funcionando por um milagre que ninguém consegue explicar.";
+    if (highestStat.key == 'Chutônico' && lowestStat.key == 'Foguete no Cronograma') {
+      return "Este time é a prova de que sorte também é habilidade. O projeto será entregue atrasado, mas a nota será surpreendentemente alta.";
     }
-    if (highestStat.key == 'Palestrinha' && lowestStat.key == 'QI de Debug') {
-      return "Mestres da lábia. Vão convencer o professor de que o bug é, na verdade, uma feature inovadora. O código pode não ser dos melhores, mas a nota será altíssima.";
+    if (highestStat.key == 'Foguete no Cronograma' && lowestStat.key == 'Sangue de Monster') {
+      return "Grupo organizado e pontual. Entregam tudo antes do prazo, mas precisam de muito café para manter o ritmo.";
     }
 
     return "Este grupo tem seu maior poder em '${highestStat.key}' e sua maior fraqueza em '${lowestStat.key}'. Um equilíbrio... interessante, para dizer o mínimo.";

@@ -17,54 +17,29 @@ class AttributeDetail {
 // The list of all attribute details
 final List<AttributeDetail> attributeDetails = [
   AttributeDetail(
-    icon: Icons.alarm,
-    name: 'Deadline Drive',
-    description: 'A energia que só um prazo de entrega de projeto pode gerar.',
+    icon: Icons.rocket_launch,
+    name: 'Foguete no Cronograma',
+    description: 'O cara que entrega tudo antes do prazo. Tão raro que deveria ser estudado pela NASA',
   ),
   AttributeDetail(
-    icon: Icons.tab,
-    name: 'Velocidade Alt+Tab',
-    description: 'A rapidez para alternar entre o AutoCAD, o WhatsApp e a aula gravada.',
+    icon: Icons.undo,
+    name: 'Mito',
+    description: 'Sempre tem uma solução. Se fosse um jogo, ele seria o cheat code',
   ),
   AttributeDetail(
-    icon: Icons.bug_report,
-    name: 'QI de Debug',
-    description: 'A genialidade para achar o erro no código ou no cálculo que ninguém mais viu.',
-  ),
-  AttributeDetail(
-    icon: Icons.check_circle_outline,
-    name: 'Chute Certeiro',
-    description: 'A habilidade de acertar aquela questão de múltipla escolha na prova sem ter a menor ideia.',
-  ),
-  AttributeDetail(
-    icon: Icons.record_voice_over,
-    name: 'Palestrinha',
-    description: 'A habilidade de dar mini-palestras sobre assuntos óbvios e atrasar a reunião do grupo.',
-  ),
-  AttributeDetail(
-    icon: Icons.battery_charging_full,
-    name: 'Bateria Social',
-    description: 'A energia para trabalhos em grupo antes de precisar se isolar com seus fones de ouvido.',
-  ),
-  AttributeDetail(
-    icon: Icons.grid_on,
-    name: 'Magia do Excel',
-    description: 'A capacidade de criar planilhas que resolvem problemas de cálculo e geram gráficos que o professor ama.',
-  ),
-  AttributeDetail(
-    icon: Icons.book,
-    name: 'Resistência à Prova',
-    description: 'A capacidade de sobreviver a uma semana de provas finais com poucas horas de sono e muita matéria acumulada.',
-  ),
-  AttributeDetail(
-    icon: Icons.exit_to_app,
-    name: 'Saída à Francesa',
-    description: 'A arte de escapar daquela aula de Cálculo IV às 7h da manhã sem que o professor perceba.',
-  ),
-  AttributeDetail(
-    icon: Icons.coffee,
+    icon: Icons.local_drink,
     name: 'Sangue de Café',
-    description: 'Quando seu corpo funciona à base de café e da esperança de se formar um dia.',
+    description: 'Corpo humano? Não. 70% Monster, 20% café, 10% ansiedade existencial.',
+  ),
+  AttributeDetail(
+    icon: Icons.casino,
+    name: 'Falador',
+    description: 'O cara que fala mais que o professor e ainda consegue convencer o grupo a mudar de ideia.',
+  ),
+  AttributeDetail(
+    icon: Icons.visibility_off,
+    name: 'Fantasma',
+    description: 'O cara que some do mapa. E só aparece quando o professor chama.',
   ),
 ];
 
