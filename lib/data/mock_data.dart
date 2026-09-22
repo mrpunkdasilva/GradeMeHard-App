@@ -1,104 +1,224 @@
-// lib/mock_data.dart
-
-import 'dart:math';
 import 'package:grademehard_app/domain/student.dart';
-
-final _random = Random();
-
-// Helper function to create a student with random attributes
-Student _createStudent(String name, String imageUrlSeed) {
-  return Student(
-    name: name,
-    imageUrl: 'https://picsum.photos/seed/$imageUrlSeed/200/300',
-    attributes: {
-      'Inteligência': _random.nextInt(6),
-      'Força': _random.nextInt(6),
-      'Resistência': _random.nextInt(6),
-      'Sorte': _random.nextInt(6),
-      'Carisma': _random.nextInt(6),
-    },
-  );
-}
 
 final List<Student> mockStudents = [
   Student(
-    name: 'Zaladria',
-    imageUrl: 'https://picsum.photos/seed/zaladria/200/300',
-    attributes: {
-      'Inteligência': 5,
-      'Força': 3,
-      'Resistência': 4,
-      'Sorte': 2,
-      'Carisma': 1,
-    },
+    name: 'João Oliveira',
+    imageUrl: 'https://picsum.photos/seed/joao-oliveira/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
   ),
   Student(
-    name: 'Jonas "O Coder Fantasma"',
-    imageUrl: 'https://picsum.photos/seed/jonas/200/300',
-    attributes: {
-      'Inteligência': 2,
-      'Força': 5,
-      'Resistência': 3,
-      'Sorte': 4,
-      'Carisma': 5,
-    },
+    name: 'Katarina Rodrigues',
+    imageUrl: 'https://picsum.photos/seed/katarina/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
   ),
   Student(
-    name: 'Beatriz "A Rainha do Debug"',
-    imageUrl: 'https://picsum.photos/seed/beatriz/200/300',
-    attributes: {
-      'Inteligência': 5,
-      'Força': 5,
-      'Resistência': 4,
-      'Sorte': 3,
-      'Carisma': 2,
-    },
+    name: 'Pedro Lima',
+    imageUrl: 'https://picsum.photos/seed/pedro-lima/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
   ),
   Student(
-    name: 'Carlos "O Mestre do Copia e Cola"',
-    imageUrl: 'https://picsum.photos/seed/carlos/200/300',
-    attributes: {
-      'Inteligência': 1,
-      'Força': 2,
-      'Resistência': 3,
-      'Sorte': 5,
-      'Carisma': 4,
-    },
+    name: 'Caio Sarmento',
+    imageUrl: 'https://picsum.photos/seed/caio/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
   ),
   Student(
-    name: 'Fernanda "A Procrastinadora Profissional"',
-    imageUrl: 'https://picsum.photos/seed/fernanda/200/300',
-    attributes: {
-      'Inteligência': 1,
-      'Força': 4,
-      'Resistência': 2,
-      'Sorte': 5,
-      'Carisma': 3,
-    },
+    name: 'Arthur Cruz',
+    imageUrl: 'https://picsum.photos/seed/arthur/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
   ),
-  _createStudent('Lucas "O Mago do CSS"', 'lucas'),
-  _createStudent('Mariana "A Lenda do Git"', 'mariana'),
-  _createStudent('Pedro "O Destruidor de Builds"', 'pedro'),
-  _createStudent('Juliana "A Imperatriz da API"', 'juliana'),
-  _createStudent('Rafael "O Arquiteto de Microsserviços"', 'rafael'),
-  _createStudent('Camila "A Ninja do JavaScript"', 'camila'),
-  _createStudent('Gustavo "O Senhor dos Loops"', 'gustavo'),
-  _createStudent('Larissa "A Deusa do Deploy"', 'larissa'),
-  _createStudent('Matheus "O Caçador de Bugs"', 'matheus'),
-  _createStudent('Amanda "A Oráculo do Stack Overflow"', 'amanda'),
-  _createStudent('Bruno "O Executor de Scripts"', 'bruno'),
-  _createStudent('Letícia "A Sacerdotisa do Scrum"', 'leticia'),
-  _createStudent('Felipe "O Guardião da Documentação"', 'felipe'),
-  _createStudent('Gabriela "A Mestre dos Testes"', 'gabriela'),
-  _createStudent('Vinicius "O Alquimista de Dados"', 'vinicius'),
-  _createStudent('Ana "A Feiticeira do Frontend"', 'ana'),
-  _createStudent('Diego "O Bárbaro do Backend"', 'diego'),
-  _createStudent('Sofia "A Encantadora de UX"', 'sofia'),
-  _createStudent('Thiago "O Monge do Mobile"', 'thiago'),
-  _createStudent('Isabella "A Paladina da Performance"', 'isabella'),
-  _createStudent('João "O Gladiador do Gradle"', 'joao'),
-  _createStudent('Laura "A Dama do Docker"', 'laura'),
-  _createStudent('Daniel "O Profeta do Python"', 'daniel'),
-  _createStudent('Beatriz "A Valquíria do Vue"', 'beatriz2'),
-  _createStudent('Ricardo "O Rei do Regex"', 'ricardo'),
+  Student(
+    name: 'Rinaldo Lira',
+    imageUrl: 'https://picsum.photos/seed/rinaldo/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Gabriel Silva',
+    imageUrl: 'https://picsum.photos/seed/gabriel-silva/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'William Schreiner',
+    imageUrl: 'https://picsum.photos/seed/william/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Rhuan Esteves',
+    imageUrl: 'https://picsum.photos/seed/rhuan/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'João Mendonça',
+    imageUrl: 'https://picsum.photos/seed/joao-mendonca/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Grazielle Nascimento',
+    imageUrl: 'https://picsum.photos/seed/grazielle/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Vitor Pereira',
+    imageUrl: 'https://picsum.photos/seed/vitor/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Gabriel Ramos',
+    imageUrl: 'https://picsum.photos/seed/gabriel-ramos/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Rafaela Soares',
+    imageUrl: 'https://picsum.photos/seed/rafaela/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Pedro Souza',
+    imageUrl: 'https://picsum.photos/seed/pedro-souza/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Joatan Farias',
+    imageUrl: 'https://picsum.photos/seed/joatan/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Mariah Bocoli',
+    imageUrl: 'https://picsum.photos/seed/mariah/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Heitor Machado',
+    imageUrl: 'https://picsum.photos/seed/heitor/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Fernanda Brito',
+    imageUrl: 'https://picsum.photos/seed/fernanda-brito/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'João Pereira',
+    imageUrl: 'https://picsum.photos/seed/joao-pereira/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Willian Marques',
+    imageUrl: 'https://picsum.photos/seed/willian/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Maria Izabel',
+    imageUrl: 'https://picsum.photos/seed/maria-izabel/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Gustavo Jesus',
+    imageUrl: 'https://picsum.photos/seed/gustavo/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Jair Alarcon',
+    imageUrl: 'https://picsum.photos/seed/jair/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Lays Cruz',
+    imageUrl: 'https://picsum.photos/seed/lays/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'João Silva',
+    imageUrl: 'https://picsum.photos/seed/joao-silva/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Henrique Alencar',
+    imageUrl: 'https://picsum.photos/seed/henrique/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Victor Santos',
+    imageUrl: 'https://picsum.photos/seed/victor/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Vinicius Delmondes',
+    imageUrl: 'https://picsum.photos/seed/vinicius/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Deividi Santos',
+    imageUrl: 'https://picsum.photos/seed/deividi/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Ilmara Soares',
+    imageUrl: 'https://picsum.photos/seed/ilmara/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Renato Pinto',
+    imageUrl: 'https://picsum.photos/seed/renato/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Murillo Morais',
+    imageUrl: 'https://picsum.photos/seed/murillo/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Wallace Freitas',
+    imageUrl: 'https://picsum.photos/seed/wallace/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Safira Cunha',
+    imageUrl: 'https://picsum.photos/seed/safira/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Adrus Prestes',
+    imageUrl: 'https://picsum.photos/seed/adrus/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Kadymo Pereira',
+    imageUrl: 'https://picsum.photos/seed/kadymo/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Miqueias Ferreira',
+    imageUrl: 'https://picsum.photos/seed/miqueias/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Allyson Oliveira',
+    imageUrl: 'https://picsum.photos/seed/allyson/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Antonio Valentim',
+    imageUrl: 'https://picsum.photos/seed/antonio/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Matheus Henrique',
+    imageUrl: 'https://picsum.photos/seed/matheus/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'João Zache',
+    imageUrl: 'https://picsum.photos/seed/joao-zache/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Lara Aguirres',
+    imageUrl: 'https://picsum.photos/seed/lara/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
+  Student(
+    name: 'Saac',
+    imageUrl: 'https://picsum.photos/seed/saac/200/300',
+    attributes: {'Inteligência': 0, 'Força': 0, 'Resistência': 0, 'Sorte': 0, 'Carisma': 0},
+  ),
 ];
