@@ -14,7 +14,7 @@ class GroupBuilderScreen extends StatefulWidget {
 }
 
 class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
-  final List<Student?> _group = List.filled(5, null);
+  List<Student?> _group = List.filled(5, null);
 
   void _addToGroup(Student student) {
     if (_group.contains(student)) return;
@@ -25,7 +25,7 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('O grupo está cheio!'), duration: Duration(seconds: 1)),
+        const SnackBar(content: Text('O grupo está cheio! Adicione mais vagas.'), duration: Duration(seconds: 1)),
       );
     }
   }
@@ -34,6 +34,25 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
     setState(() {
       _group[index] = null;
     });
+  }
+
+  void _addSlot() {
+    setState(() {
+      _group.add(null);
+    });
+  }
+
+  void _removeSlot() {
+    final lastEmpty = _group.lastIndexWhere((s) => s == null);
+    if (lastEmpty != -1) {
+      setState(() {
+        _group.removeAt(lastEmpty);
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Remova um membro antes de diminuir o tamanho do grupo.'), duration: Duration(seconds: 1)),
+      );
+    }
   }
 
   @override
@@ -59,13 +78,42 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
                   color: theme.colorScheme.secondary,
                 ),
               ),
-              Text(
-                '${groupStudents.length}/5',
-                style: GoogleFonts.lato(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.onSurface.withOpacity(0.6),
-                ),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: _removeSlot,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.8),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.remove, color: Colors.white, size: 16),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      '${groupStudents.length}/${_group.length}',
+                      style: GoogleFonts.lato(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _addSlot,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.8),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.add, color: Colors.white, size: 16),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -137,7 +185,7 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
               foregroundColor: theme.colorScheme.onSecondary,
               padding: const EdgeInsets.symmetric(vertical: 16.0),
             ),
-            onPressed: isGroupFull
+            onPressed: groupStudents.isNotEmpty
                 ? () {
                     Navigator.push(
                       context,
