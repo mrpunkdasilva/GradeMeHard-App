@@ -27,7 +27,7 @@ class _VotingScreenState extends State<VotingScreen> {
   @override
   void initState() {
     super.initState();
-    _students = List.from(mockStudents);
+    _students = List.from(mockStudents)..sort((a, b) => a.name.compareTo(b.name));
     _auth.init();
   }
 
@@ -466,7 +466,7 @@ class _AnimatedVoteCardState extends State<_AnimatedVoteCard>
             fit: StackFit.expand,
             children: [
               SvgPicture.asset(
-                'assets/images/card.svg',
+                'assets/images/Card.svg',
                 fit: BoxFit.cover,
               ),
               Container(

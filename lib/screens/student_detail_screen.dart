@@ -68,7 +68,7 @@ class StudentDetailScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: SvgPicture.asset(
-                      'assets/images/card.svg',
+                      'assets/images/Card.svg',
                       height: 300,
                       width: 300,
                       fit: BoxFit.cover,

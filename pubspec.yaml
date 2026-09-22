@@ -66,7 +66,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/ranks/
-    - assets/images/card.svg
     - assets/images/Card.svg
     - assets/images/grademehard.png
     - assets/images/rectangle-purple.svg
