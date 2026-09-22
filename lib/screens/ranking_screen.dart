@@ -14,6 +14,15 @@ class RankingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return const RankingBody();
+  }
+}
+
+class RankingBody extends StatelessWidget {
+  const RankingBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     // Sort students by total score in descending order
     final sortedStudents = List<Student>.from(mockStudents)
       ..sort((a, b) => b.totalScore.compareTo(a.totalScore));
@@ -22,133 +31,89 @@ class RankingScreen extends StatelessWidget {
     final remainingStudents = sortedStudents.skip(5).toList();
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Ranking de Alunos', style: GoogleFonts.cinzel()),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.help_outline),
-            tooltip: 'Glossário de Atributos',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AttributesScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.emoji_events_outlined),
-            tooltip: 'Guia de Ranks',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const RanksExplainedScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.group_add_outlined),
-            tooltip: 'Montar Grupo',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const GroupBuilderScreen(),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // --- Top 5 Section ---
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Top 5 Alunos',
-              style: GoogleFonts.cinzel(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.secondary,
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // --- Top 5 Section ---
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            'Top 5 Alunos',
+            style: GoogleFonts.cinzel(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.secondary,
             ),
           ),
-          SizedBox(
-            height: 260, // Height for the horizontal list
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              itemCount: top5Students.length,
-              itemBuilder: (context, index) {
-                final student = top5Students[index];
-                return SizedBox(
-                  width: 250, // Width of the larger cards for top 5
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                    child: StudentCard(
-                      student: student,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                StudentDetailScreen(student: student),
-                          ),
-                        );
-                      },
-                    ),
+        ),
+        SizedBox(
+          height: 260, // Height for the horizontal list
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            itemCount: top5Students.length,
+            itemBuilder: (context, index) {
+              final student = top5Students[index];
+              return SizedBox(
+                width: 250, // Width of the larger cards for top 5
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                  child: StudentCard(
+                    student: student,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              StudentDetailScreen(student: student),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
+        ),
 
-          // --- Divider and Title for the rest ---
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 8.0),
-            child: Text(
-              'Ranking Geral',
-              style: GoogleFonts.cinzel(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.secondary,
-              ),
+        // --- Divider and Title for the rest ---
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 8.0),
+          child: Text(
+            'Ranking Geral',
+            style: GoogleFonts.cinzel(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.secondary,
             ),
           ),
+        ),
 
-          // --- Remaining Students List ---
-          Expanded(
-            child: ListView.builder(
-              itemCount: remainingStudents.length,
-              itemBuilder: (context, index) {
-                final student = remainingStudents[index];
-                // Rank position starts from 6
-                final rankPosition = index + 6;
-                return _StudentListTile(
-                  student: student,
-                  rankPosition: rankPosition,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            StudentDetailScreen(student: student),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+        // --- Remaining Students List ---
+        Expanded(
+          child: ListView.builder(
+            itemCount: remainingStudents.length,
+            itemBuilder: (context, index) {
+              final student = remainingStudents[index];
+              // Rank position starts from 6
+              final rankPosition = index + 6;
+              return _StudentListTile(
+                student: student,
+                rankPosition: rankPosition,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          StudentDetailScreen(student: student),
+                    ),
+                  );
+                },
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

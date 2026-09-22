@@ -58,129 +58,121 @@ class _GroupBuilderScreenState extends State<GroupBuilderScreen> {
     final theme = Theme.of(context);
     final isGroupFull = !_group.contains(null);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Montar Grupo', style: GoogleFonts.cinzel()),
-        centerTitle: true,
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Top Panel: The selected group
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Seu Grupo',
-              style: GoogleFonts.cinzel(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.secondary,
-              ),
-              textAlign: TextAlign.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Top Panel: The selected group
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Seu Grupo',
+            style: GoogleFonts.cinzel(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.secondary,
             ),
+            textAlign: TextAlign.center,
           ),
-          Container(
-            height: 300, // Adjusted height for the group panel
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 300.0, // Max width of each item
-                mainAxisExtent: 250.0, // Fixed height of each item
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-              ),
-              itemCount: _group.length,
-              itemBuilder: (context, index) {
-                final student = _group[index];
-                if (student == null) {
-                  return const _EmptySlotCard();
-                }
-                return StudentCard(
+        ),
+        Container(
+          height: 200,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 300.0,
+              mainAxisExtent: 180.0,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+            ),
+            itemCount: _group.length,
+            itemBuilder: (context, index) {
+              final student = _group[index];
+              if (student == null) {
+                return const _EmptySlotCard();
+              }
+              return StudentCard(
+                student: student,
+                onTap: () => _onGroupStudentTapped(index),
+                enableHero: false,
+              );
+            },
+          ),
+        ),
+
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: Divider(),
+        ),
+
+        // Bottom Panel: The available students gallery
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Alunos Disponíveis',
+            style: GoogleFonts.cinzel(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.secondary,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Expanded(
+          child: GridView.builder(
+            padding: const EdgeInsets.all(10.0),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 150.0,
+              mainAxisExtent: 203.0,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+            ),
+            itemCount: mockStudents.length,
+            itemBuilder: (context, index) {
+              final student = mockStudents[index];
+              final isSelected = _group.contains(student);
+              return Opacity(
+                opacity: isSelected ? 0.5 : 1.0,
+                child: StudentCard(
                   student: student,
-                  onTap: () => _onGroupStudentTapped(index),
-                  enableHero: false, // Disable hero animation here
-                );
-              },
-            ),
-          ),
-
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Divider(),
-          ),
-
-          // Bottom Panel: The available students gallery
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Alunos Disponíveis',
-              style: GoogleFonts.cinzel(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.secondary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(10.0),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 150.0, // Max width of each item
-                mainAxisExtent: 203.0, // Fixed height of each item
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-              ),
-              itemCount: mockStudents.length,
-              itemBuilder: (context, index) {
-                final student = mockStudents[index];
-                final isSelected = _group.contains(student);
-                return Opacity(
-                  opacity: isSelected ? 0.5 : 1.0,
-                  child: StudentCard(
-                    student: student,
-                    onTap: () => _onStudentTapped(student),
-                    enableHero: false, // And disable it here too
-                  ),
-                );
-              },
-            ),
-          ),
-          // Analyze Button
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: theme.colorScheme.secondary,
-                foregroundColor: theme.colorScheme.onSecondary,
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-              ),
-              onPressed: isGroupFull
-                  ? () {
-                      // Navigate to analysis screen
-                      // The cast is safe because we checked with isGroupFull
-                      final fullGroup =
-                          _group.cast<Student>().toList();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              GroupAnalysisScreen(group: fullGroup),
-                        ),
-                      );
-                    }
-                  : null, // Button is disabled if group is not full
-              child: Text(
-                'Analisar Grupo',
-                style: GoogleFonts.cinzel(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  onTap: () => _onStudentTapped(student),
+                  enableHero: false,
                 ),
+              );
+            },
+          ),
+        ),
+        // Analyze Button
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: theme.colorScheme.secondary,
+              foregroundColor: theme.colorScheme.onSecondary,
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+            ),
+            onPressed: isGroupFull
+                ? () {
+                    final fullGroup =
+                        _group.cast<Student>().toList();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            GroupAnalysisScreen(group: fullGroup),
+                      ),
+                    );
+                  }
+                : null,
+            child: Text(
+              'Analisar Grupo',
+              style: GoogleFonts.cinzel(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
