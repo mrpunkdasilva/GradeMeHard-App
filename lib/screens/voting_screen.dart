@@ -98,18 +98,20 @@ class _VotingScreenState extends State<VotingScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    TextField(
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        prefixIcon: const Icon(Icons.email_outlined),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                    if (isSignup) ...[
+                      TextField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          prefixIcon: const Icon(Icons.email_outlined),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
+                      const SizedBox(height: 16),
+                    ],
                     TextField(
                       controller: passController,
                       obscureText: obscurePass,
@@ -154,7 +156,7 @@ class _VotingScreenState extends State<VotingScreen> {
                             success = await _auth.login(name, pass);
                             if (!success && mounted) {
                               ScaffoldMessenger.of(ctx).showSnackBar(
-                                const SnackBar(content: Text('Nome/email ou senha incorretos'), backgroundColor: Colors.red),
+                                const SnackBar(content: Text('Nome ou senha incorretos'), backgroundColor: Colors.red),
                               );
                               return;
                             }

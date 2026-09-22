@@ -43,7 +43,7 @@ class AuthService {
     return true;
   }
 
-  Future<bool> login(String nameOrEmail, String password) async {
+  Future<bool> login(String name, String password) async {
     final prefs = await SharedPreferences.getInstance();
     final users = prefs.getStringList('users') ?? [];
 
@@ -51,10 +51,9 @@ class AuthService {
 
     final user = users.where((u) {
       final parts = u.split('|');
-      final matchName = parts[0].toLowerCase() == nameOrEmail.toLowerCase();
-      final matchEmail = parts[1].toLowerCase() == nameOrEmail.toLowerCase();
+      final matchName = parts[0].toLowerCase() == name.toLowerCase();
       final matchPass = parts[2] == hashedPassword;
-      return (matchName || matchEmail) && matchPass;
+      return matchName && matchPass;
     });
 
     if (user.isEmpty) return false;
