@@ -27,7 +27,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
   @override
   void initState() {
     super.initState();
-    _remainingPoints = 5;
+    _remainingPoints = 10;
     _attributePoints = {
       for (var attr in attributeDetails) attr.name: 0
     };
@@ -37,7 +37,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
     final currentPoints = _attributePoints[attributeName]!;
     final newPoints = currentPoints + delta;
 
-    if (newPoints < 0 || newPoints > 10) return;
+    if (newPoints < 0 || newPoints > 2) return;
 
     if (_remainingPoints - delta < 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -107,7 +107,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
                 final attribute = attributeDetails[index];
                 final points = _attributePoints[attribute.name]!;
 
-                final canIncrement = points < 5 && _remainingPoints > 0;
+                final canIncrement = points < 2 && _remainingPoints > 0;
                 final canDecrement = points > 0;
 
                 return Card(
