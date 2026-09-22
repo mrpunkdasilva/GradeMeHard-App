@@ -495,24 +495,25 @@ class _AnimatedVoteCardState extends State<_AnimatedVoteCard>
                         ),
                       ),
                       const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/images/ranks/${widget.student.rank}.svg',
-                            width: 18,
-                            height: 18,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Score: ${widget.student.totalScore}',
-                            style: GoogleFonts.lato(
-                              fontSize: 12,
-                              color: Colors.white70,
-                              fontWeight: FontWeight.bold,
+                      if (widget.student.totalScore > 0)
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/images/ranks/${widget.student.rank}.svg',
+                              width: 18,
+                              height: 18,
                             ),
-                          ),
-                        ],
-                      ),
+                            const SizedBox(width: 4),
+                            Text(
+                              'Score: ${widget.student.totalScore}',
+                              style: GoogleFonts.lato(
+                                fontSize: 12,
+                                color: Colors.white70,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       const SizedBox(height: 8),
                       ...widget.student.effectiveAttributes.entries.take(5).map(
                         (entry) => Padding(
