@@ -27,7 +27,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
   @override
   void initState() {
     super.initState();
-    _remainingPoints = 10;
+    _remainingPoints = 20;
     _attributePoints = {
       for (var attr in attributeDetails) attr.name: 0
     };

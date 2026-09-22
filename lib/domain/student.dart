@@ -27,4 +27,14 @@ class Student {
     if (voted.isNotEmpty) return voted;
     return attributes;
   }
+
+  static int getModifier(int score) {
+    return ((score - 10) / 2).floor();
+  }
+
+  static String formatModifier(int score) {
+    final mod = getModifier(score);
+    if (mod > 0) return '+$mod';
+    return '$mod';
+  }
 }

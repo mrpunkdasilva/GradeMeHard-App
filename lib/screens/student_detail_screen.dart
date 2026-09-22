@@ -27,6 +27,15 @@ class StudentDetailScreen extends StatelessWidget {
     return detail.description;
   }
 
+  Color _getModifierColor(int score) {
+    final mod = Student.getModifier(score);
+    if (mod >= 3) return Colors.green;
+    if (mod >= 1) return Colors.lightGreen;
+    if (mod == 0) return Colors.grey;
+    if (mod >= -2) return Colors.orange;
+    return Colors.red;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -37,6 +46,7 @@ class StudentDetailScreen extends StatelessWidget {
         : student.attributes.entries.toList();
     final totalScore = votingService.getStudentTotalScore(student.name);
     final displayScore = totalScore > 0 ? totalScore : student.totalScore;
+    final voteCount = votingService.getVotesForStudent(student.name).length;
 
     return Scaffold(
       appBar: AppBar(
@@ -86,17 +96,40 @@ class StudentDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Text(
-              'Score: $displayScore',
-              style: GoogleFonts.cinzel(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: theme.colorScheme.secondary,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.secondary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: theme.colorScheme.secondary.withOpacity(0.3),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'SCORE TOTAL: ',
+                    style: GoogleFonts.cinzel(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                    ),
+                  ),
+                  Text(
+                    '$displayScore',
+                    style: GoogleFonts.cinzel(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.secondary,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              '${votingService.getVotesForStudent(student.name).length} votos recebidos',
+              '$voteCount voto${voteCount != 1 ? 's' : ''} recebido${voteCount != 1 ? 's' : ''}',
               style: TextStyle(
                 fontSize: 14,
                 color: theme.colorScheme.onSurface.withOpacity(0.6),
@@ -122,7 +155,11 @@ class StudentDetailScreen extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 final attribute = attributes[index];
-                final maxScore = 10;
+                final score = attribute.value;
+                final modifier = Student.getModifier(score);
+                final modifierStr = Student.formatModifier(score);
+                final modifierColor = _getModifierColor(score);
+
                 return Tooltip(
                   message: _getAttributeDescription(attribute.key),
                   child: Row(
@@ -135,31 +172,49 @@ class StudentDetailScreen extends StatelessWidget {
                       const SizedBox(width: 16),
                       Expanded(
                         flex: 3,
-                        child: Text(
-                          attribute.key,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              attribute.key,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              modifierStr,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: modifierColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Expanded(
                         flex: 4,
                         child: LinearProgressIndicator(
-                          value: (attribute.value / maxScore).clamp(0.0, 1.0),
+                          value: (score / 20).clamp(0.0, 1.0),
                           backgroundColor: Colors.grey.withOpacity(0.3),
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            theme.colorScheme.secondary,
+                            modifierColor,
                           ),
                           minHeight: 8,
                         ),
                       ),
                       const SizedBox(width: 16),
-                      Text(
-                        '${attribute.value}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        width: 40,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '$score',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
