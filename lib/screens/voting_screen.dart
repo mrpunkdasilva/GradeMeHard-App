@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grademehard_app/data/mock_data.dart';
 import 'package:grademehard_app/domain/student.dart';
@@ -8,6 +9,7 @@ import 'package:grademehard_app/screens/group_builder_screen.dart';
 import 'package:grademehard_app/screens/attributes_screen.dart';
 import 'package:grademehard_app/screens/ranks_explained_screen.dart';
 import 'package:grademehard_app/services/auth_service.dart';
+import 'package:grademehard_app/services/voting_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class VotingScreen extends StatefulWidget {
@@ -444,85 +446,116 @@ class _AnimatedVoteCardState extends State<_AnimatedVoteCard>
               width: 1.5,
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Stack(
+            fit: StackFit.expand,
             children: [
-              Expanded(
-                flex: 4,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Image.network(
-                      widget.student.imageUrl,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        color: Colors.grey[800],
-                        child: const Icon(Icons.person, size: 60, color: Colors.white54),
+              SvgPicture.asset(
+                'assets/images/card.svg',
+                fit: BoxFit.cover,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.3),
+                      Colors.black.withOpacity(0.7),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: SvgPicture.asset(
+                  'assets/images/ranks/${widget.student.rank}.svg',
+                  width: 44,
+                  height: 44,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.student.name,
+                        style: GoogleFonts.cinzel(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            const Shadow(blurRadius: 4, color: Colors.black),
+                          ],
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      top: 10,
-                      right: 10,
-                      child: SvgPicture.asset(
-                        'assets/images/ranks/${widget.student.rank}.svg',
-                        width: 44,
-                        height: 44,
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/images/ranks/${widget.student.rank}.svg',
+                            width: 18,
+                            height: 18,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Score: ${widget.student.totalScore}',
+                            style: GoogleFonts.lato(
+                              fontSize: 12,
+                              color: Colors.white70,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              Colors.black.withOpacity(0.8),
+                      const SizedBox(height: 8),
+                      ...widget.student.effectiveAttributes.entries.take(5).map(
+                        (entry) => Padding(
+                          padding: const EdgeInsets.only(bottom: 3),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 70,
+                                child: Text(
+                                  entry.key,
+                                  style: const TextStyle(
+                                    fontSize: 9,
+                                    color: Colors.white70,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Expanded(
+                                child: LinearProgressIndicator(
+                                  value: (entry.value / 20).clamp(0.0, 1.0),
+                                  backgroundColor: Colors.white24,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    theme.colorScheme.secondary,
+                                  ),
+                                  minHeight: 4,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${entry.value}',
+                                style: const TextStyle(
+                                  fontSize: 9,
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                color: theme.colorScheme.surface,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.student.name,
-                      style: GoogleFonts.cinzel(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/images/ranks/${widget.student.rank}.svg',
-                          width: 20,
-                          height: 20,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          'Score: ${widget.student.totalScore}',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.secondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

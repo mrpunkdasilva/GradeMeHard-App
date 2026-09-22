@@ -14,7 +14,7 @@ class StudentDetailScreen extends StatelessWidget {
   IconData _getIconForAttribute(String attribute) {
     final detail = attributeDetails.firstWhere(
       (d) => d.name == attribute,
-      orElse: () => AttributeDetail(icon: Icons.help_outline, name: '', description: ''),
+      orElse: () => AttributeDetail(icon: Icons.help_outline, name: '', description: '', imagePath: ''),
     );
     return detail.icon;
   }
@@ -22,7 +22,7 @@ class StudentDetailScreen extends StatelessWidget {
   String _getAttributeDescription(String attributeName) {
     final detail = attributeDetails.firstWhere(
       (d) => d.name == attributeName,
-      orElse: () => AttributeDetail(icon: Icons.help_outline, name: '', description: 'Nenhuma descrição encontrada.'),
+      orElse: () => AttributeDetail(icon: Icons.help_outline, name: '', description: 'Nenhuma descrição encontrada.', imagePath: ''),
     );
     return detail.description;
   }
@@ -65,22 +65,13 @@ class StudentDetailScreen extends StatelessWidget {
             Center(
               child: Stack(
                 children: [
-                  Hero(
-                    tag: 'student-image-${student.name}',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: Image.network(
-                        student.imageUrl,
-                        height: 300,
-                        width: 300,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          height: 300,
-                          width: 300,
-                          color: Colors.grey[800],
-                          child: const Icon(Icons.error, color: Colors.red, size: 50),
-                        ),
-                      ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: SvgPicture.asset(
+                      'assets/images/card.svg',
+                      height: 300,
+                      width: 300,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   Positioned(
@@ -90,6 +81,21 @@ class StudentDetailScreen extends StatelessWidget {
                       'assets/images/ranks/${student.rank}.svg',
                       width: 60,
                       height: 60,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 12,
+                    left: 12,
+                    child: Text(
+                      student.name,
+                      style: GoogleFonts.cinzel(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          const Shadow(blurRadius: 6, color: Colors.black),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -149,10 +155,7 @@ class StudentDetailScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: attributes.length,
-              separatorBuilder: (context, index) => Divider(
-                color: Colors.white.withOpacity(0.1),
-                height: 16,
-              ),
+              separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemBuilder: (context, index) {
                 final attribute = attributes[index];
                 final score = attribute.value;
@@ -160,64 +163,95 @@ class StudentDetailScreen extends StatelessWidget {
                 final modifierStr = Student.formatModifier(score);
                 final modifierColor = _getModifierColor(score);
 
+                final detail = attributeDetails.firstWhere(
+                  (d) => d.name == attribute.key,
+                  orElse: () => AttributeDetail(icon: Icons.help_outline, name: '', description: '', imagePath: ''),
+                );
+
                 return Tooltip(
                   message: _getAttributeDescription(attribute.key),
-                  child: Row(
-                    children: [
-                      Icon(
-                        _getIconForAttribute(attribute.key),
-                        color: theme.colorScheme.secondary,
-                        size: 28,
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              attribute.key,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              modifierStr,
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: modifierColor,
-                              ),
-                            ),
-                          ],
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Stack(
+                      children: [
+                        SvgPicture.asset(
+                          detail.imagePath,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 60,
                         ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: LinearProgressIndicator(
-                          value: (score / 20).clamp(0.0, 1.0),
-                          backgroundColor: Colors.grey.withOpacity(0.3),
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            modifierColor,
-                          ),
-                          minHeight: 8,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Container(
-                        width: 40,
-                        alignment: Alignment.center,
-                        child: Text(
-                          '$score',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.6),
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  _getIconForAttribute(attribute.key),
+                                  color: theme.colorScheme.secondary,
+                                  size: 24,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        attribute.key,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        modifierStr,
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.bold,
+                                          color: modifierColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 18),
+                                    child: LinearProgressIndicator(
+                                      value: (score / 20).clamp(0.0, 1.0),
+                                      backgroundColor: Colors.white24,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        modifierColor,
+                                      ),
+                                      minHeight: 6,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  '$score',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

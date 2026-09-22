@@ -1,48 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Data class for attribute details
 class AttributeDetail {
   final IconData icon;
   final String name;
   final String description;
+  final String imagePath;
 
   AttributeDetail({
     required this.icon,
     required this.name,
     required this.description,
+    required this.imagePath,
   });
 }
 
-// The list of all attribute details
 final List<AttributeDetail> attributeDetails = [
   AttributeDetail(
     icon: Icons.psychology,
     name: 'Inteligência',
     description: 'A capacidade de entender a matéria sem precisar de 3 tutoriais no YouTube.',
+    imagePath: 'assets/images/rectangle-purple.svg',
   ),
   AttributeDetail(
     icon: Icons.fitness_center,
     name: 'Força',
     description: 'A capacidade de carregar o grupo inteiro nas costas no projeto final.',
+    imagePath: 'assets/images/rectangle-red.svg',
   ),
   AttributeDetail(
     icon: Icons.shield,
     name: 'Resistência',
     description: 'Sobreviver a uma semana de provas com 2h de sono e muita matéria acumulada.',
+    imagePath: 'assets/images/rectangle-brown.svg',
   ),
   AttributeDetail(
     icon: Icons.casino,
     name: 'Sorte',
     description: 'Acertar tudo chutando. Não sabe a matéria, mas o chute é certeiro.',
+    imagePath: 'assets/images/rectangle-yellow.svg',
   ),
   AttributeDetail(
     icon: Icons.star,
     name: 'Carisma',
     description: 'Convencer o professor de que o bug é uma feature. Fala mais que o grupo inteiro.',
+    imagePath: 'assets/images/rectangle-purple.svg',
   ),
 ];
-
 
 class AttributesScreen extends StatelessWidget {
   const AttributesScreen({super.key});
