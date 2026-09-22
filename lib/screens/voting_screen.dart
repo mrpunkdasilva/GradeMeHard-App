@@ -7,6 +7,7 @@ import 'package:grademehard_app/screens/ranking_screen.dart';
 import 'package:grademehard_app/screens/group_builder_screen.dart';
 import 'package:grademehard_app/screens/attributes_screen.dart';
 import 'package:grademehard_app/screens/ranks_explained_screen.dart';
+import 'package:grademehard_app/services/auth_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class VotingScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class VotingScreen extends StatefulWidget {
 }
 
 class _VotingScreenState extends State<VotingScreen> {
+  final AuthService _auth = AuthService();
   int _currentIndex = 0;
   List<Student> _students = [];
 
@@ -24,16 +26,171 @@ class _VotingScreenState extends State<VotingScreen> {
   void initState() {
     super.initState();
     _students = List.from(mockStudents);
+    _auth.init();
+  }
+
+  void _showLoginDialog(Student student) {
+    final nameController = TextEditingController();
+    final passController = TextEditingController();
+    bool isSignup = false;
+    bool obscurePass = true;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (ctx, setModalState) {
+            return Container(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(ctx).viewInsets.bottom,
+                left: 24,
+                right: 24,
+                top: 24,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(ctx).colorScheme.surface,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 4,
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white24,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    Text(
+                      isSignup ? 'Criar Conta' : 'Entrar para Votar',
+                      style: GoogleFonts.cinzel(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(ctx).colorScheme.secondary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Faça login para votar em ${student.name}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(ctx).colorScheme.onSurface.withOpacity(0.6),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    TextField(
+                      controller: nameController,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: InputDecoration(
+                        labelText: 'Seu nome',
+                        prefixIcon: const Icon(Icons.person_outlined),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: passController,
+                      obscureText: obscurePass,
+                      decoration: InputDecoration(
+                        labelText: 'Senha',
+                        prefixIcon: const Icon(Icons.lock_outlined),
+                        suffixIcon: IconButton(
+                          icon: Icon(obscurePass ? Icons.visibility_off : Icons.visibility),
+                          onPressed: () => setModalState(() => obscurePass = !obscurePass),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final name = nameController.text.trim();
+                          final pass = passController.text.trim();
+                          if (name.isEmpty || pass.isEmpty) {
+                            ScaffoldMessenger.of(ctx).showSnackBar(
+                              const SnackBar(content: Text('Preencha todos os campos'), backgroundColor: Colors.red),
+                            );
+                            return;
+                          }
+
+                          bool success;
+                          if (isSignup) {
+                            success = await _auth.signup(name, pass);
+                            if (!success && mounted) {
+                              ScaffoldMessenger.of(ctx).showSnackBar(
+                                const SnackBar(content: Text('Nome já cadastrado'), backgroundColor: Colors.red),
+                              );
+                              return;
+                            }
+                          } else {
+                            success = await _auth.login(name, pass);
+                            if (!success && mounted) {
+                              ScaffoldMessenger.of(ctx).showSnackBar(
+                                const SnackBar(content: Text('Nome ou senha incorretos'), backgroundColor: Colors.red),
+                              );
+                              return;
+                            }
+                          }
+
+                          if (mounted) {
+                            Navigator.pop(ctx);
+                            _vote(student);
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(ctx).colorScheme.secondary,
+                          foregroundColor: Theme.of(ctx).colorScheme.onSecondary,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                        child: Text(
+                          isSignup ? 'Criar Conta e Votar' : 'Entrar e Votar',
+                          style: GoogleFonts.cinzel(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    GestureDetector(
+                      onTap: () => setModalState(() => isSignup = !isSignup),
+                      child: Text(
+                        isSignup ? 'Já tem conta? Entrar' : 'Não tem conta? Criar conta',
+                        style: TextStyle(
+                          color: Theme.of(ctx).colorScheme.secondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   Future<void> _vote(Student student) async {
+    final voterName = _auth.currentUser ?? 'Votante';
     final votedStudentName = await Navigator.push<String>(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
             AttributeVotingScreen(
           student: student,
-          voterName: 'Votante',
+          voterName: voterName,
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
@@ -68,7 +225,9 @@ class _VotingScreenState extends State<VotingScreen> {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: Text(
-            'Toque em um aluno para votar',
+            _auth.isLoggedIn
+                ? 'Olá, ${_auth.currentUser}! Toque para votar'
+                : 'Toque em um aluno e faça login para votar',
             style: GoogleFonts.lato(
               fontSize: 16,
               color: theme.colorScheme.onSurface.withOpacity(0.7),
@@ -90,7 +249,13 @@ class _VotingScreenState extends State<VotingScreen> {
               return _AnimatedVoteCard(
                 index: index,
                 student: student,
-                onTap: () => _vote(student),
+                onTap: () {
+                  if (_auth.isLoggedIn) {
+                    _vote(student);
+                  } else {
+                    _showLoginDialog(student);
+                  }
+                },
               );
             },
           ),
@@ -112,15 +277,50 @@ class _VotingScreenState extends State<VotingScreen> {
         title: Text('Grade Me Hard', style: GoogleFonts.cinzel()),
         centerTitle: true,
         actions: [
+          if (_auth.isLoggedIn)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Center(
+                child: GestureDetector(
+                  onTap: () async {
+                    await _auth.logout();
+                    setState(() {});
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white24),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.person, size: 16, color: Theme.of(context).colorScheme.secondary),
+                        const SizedBox(width: 6),
+                        Text(
+                          _auth.currentUser!,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(Icons.logout, size: 14, color: Colors.white54),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           IconButton(
             icon: const Icon(Icons.help_outline),
             tooltip: 'Glossário',
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const AttributesScreen(),
-                ),
+                MaterialPageRoute(builder: (context) => const AttributesScreen()),
               );
             },
           ),
@@ -130,9 +330,7 @@ class _VotingScreenState extends State<VotingScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const RanksExplainedScreen(),
-                ),
+                MaterialPageRoute(builder: (context) => const RanksExplainedScreen()),
               );
             },
           ),
@@ -208,7 +406,6 @@ class _AnimatedVoteCardState extends State<_AnimatedVoteCard>
       ),
     );
 
-    // Staggered entrance based on index
     Future.delayed(Duration(milliseconds: widget.index * 60), () {
       if (mounted) _controller.forward();
     });
