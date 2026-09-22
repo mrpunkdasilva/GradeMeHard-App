@@ -24,11 +24,11 @@ class TurmaService {
       name: creatorName,
       imageUrl: 'https://picsum.photos/seed/${creatorName.hashCode}/200/300',
       attributes: {
-        'Foguete no Cronograma': 0,
-        'Ctrl+Z Humano': 0,
-        'Sangue de Monster': 0,
-        'Chutônico': 0,
-        'Fantasma da Presence': 0,
+        'Inteligência': 0,
+        'Força': 0,
+        'Resistência': 0,
+        'Sorte': 0,
+        'Carisma': 0,
       },
     );
 
@@ -56,11 +56,11 @@ class TurmaService {
       name: studentName,
       imageUrl: 'https://picsum.photos/seed/${studentName.hashCode}/200/300',
       attributes: {
-        'Foguete no Cronograma': 0,
-        'Ctrl+Z Humano': 0,
-        'Sangue de Monster': 0,
-        'Chutônico': 0,
-        'Fantasma da Presence': 0,
+        'Inteligência': 0,
+        'Força': 0,
+        'Resistência': 0,
+        'Sorte': 0,
+        'Carisma': 0,
       },
     );
 

@@ -31,20 +31,20 @@ class GroupAnalyzer {
     final lowestStat = sortedStats.first;
     final highestStat = sortedStats.last;
 
-    if (highestStat.key == 'Sangue de Monster' && lowestStat.key == 'Fantasma da Presence') {
-      return "Este grupo funciona à base de Monster e ansiedade. Trabalham muito, mas ninguém aparece na aula. O professor já esqueceu o nome deles.";
+    if (highestStat.key == 'Resistência' && lowestStat.key == 'Carisma') {
+      return "Este grupo aguenta qualquer desafio, mas ninguém consegue convencer o professor. Sobrevivem, mas não brilham.";
     }
-    if (highestStat.key == 'Ctrl+Z Humano' && lowestStat.key == 'Foguete no Cronograma') {
-      return "Mestres do improviso. Entregam tudo no último minuto, mas sempre tem um herói que conserta antes da apresentação.";
+    if (highestStat.key == 'Força' && lowestStat.key == 'Inteligência') {
+      return "Muita força de vontade, pouca estratégia. O projeto vai ser entregue, mas pode não funcionar.";
     }
-    if (highestStat.key == 'Chutônico' && lowestStat.key == 'Foguete no Cronograma') {
-      return "Este time é a prova de que sorte também é habilidade. O projeto será entregue atrasado, mas a nota será surpreendentemente alta.";
+    if (highestStat.key == 'Sorte' && lowestStat.key == 'Inteligência') {
+      return "Puro instinto. Não sabem o que estão fazendo, mas de alguma forma dá certo. Sorte de principiante?";
     }
-    if (highestStat.key == 'Foguete no Cronograma' && lowestStat.key == 'Sangue de Monster') {
-      return "Grupo organizado e pontual. Entregam tudo antes do prazo, mas precisam de muito café para manter o ritmo.";
+    if (highestStat.key == 'Inteligência' && lowestStat.key == 'Resistência') {
+      return "Gênios mas frágeis. O projeto será brilhante, se sobreviverem até a entrega.";
     }
 
-    return "Este grupo tem seu maior poder em '${highestStat.key}' e sua maior fraqueza em '${lowestStat.key}'. Um equilíbrio... interessante, para dizer o mínimo.";
+    return "Este grupo tem seu maior poder em '${highestStat.key}' e sua maior fraqueza em '${lowestStat.key}'. Um equilíbrio... interessante.";
   }
 
   static List<Student> suggestStudentsForImprovement(

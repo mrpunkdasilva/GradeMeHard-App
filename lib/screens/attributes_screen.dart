@@ -17,29 +17,29 @@ class AttributeDetail {
 // The list of all attribute details
 final List<AttributeDetail> attributeDetails = [
   AttributeDetail(
-    icon: Icons.rocket_launch,
-    name: 'Foguete no Cronograma',
-    description: 'O cara que entrega tudo antes do prazo. Tão raro que deveria ser estudado pela NASA',
+    icon: Icons.psychology,
+    name: 'Inteligência',
+    description: 'A capacidade de entender a matéria sem precisar de 3 tutoriais no YouTube.',
   ),
   AttributeDetail(
-    icon: Icons.undo,
-    name: 'Mito',
-    description: 'Sempre tem uma solução. Se fosse um jogo, ele seria o cheat code',
+    icon: Icons.fitness_center,
+    name: 'Força',
+    description: 'A capacidade de carregar o grupo inteiro nas costas no projeto final.',
   ),
   AttributeDetail(
-    icon: Icons.local_drink,
-    name: 'Sangue de Café',
-    description: 'Corpo humano? Não. 70% Monster, 20% café, 10% ansiedade existencial.',
+    icon: Icons.shield,
+    name: 'Resistência',
+    description: 'Sobreviver a uma semana de provas com 2h de sono e muita matéria acumulada.',
   ),
   AttributeDetail(
     icon: Icons.casino,
-    name: 'Falador',
-    description: 'O cara que fala mais que o professor e ainda consegue convencer o grupo a mudar de ideia.',
+    name: 'Sorte',
+    description: 'Acertar tudo chutando. Não sabe a matéria, mas o chute é certeiro.',
   ),
   AttributeDetail(
-    icon: Icons.visibility_off,
-    name: 'Fantasma',
-    description: 'O cara que some do mapa. E só aparece quando o professor chama.',
+    icon: Icons.star,
+    name: 'Carisma',
+    description: 'Convencer o professor de que o bug é uma feature. Fala mais que o grupo inteiro.',
   ),
 ];
 
