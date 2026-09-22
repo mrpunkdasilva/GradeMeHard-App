@@ -305,8 +305,6 @@ class _AnimatedVoteCardState extends State<_AnimatedVoteCard>
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Row(
