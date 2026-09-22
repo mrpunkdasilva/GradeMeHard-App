@@ -37,7 +37,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
     final currentPoints = _attributePoints[attributeName]!;
     final newPoints = currentPoints + delta;
 
-    if (newPoints < 0 || newPoints > 2) return;
+    if (newPoints < 0) return;
 
     if (_remainingPoints - delta < 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -55,7 +55,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
     });
   }
 
-  void _submitVote() {
+  Future<void> _submitVote() async {
     if (_remainingPoints > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -73,7 +73,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
       timestamp: DateTime.now(),
     );
 
-    _votingService.addVote(vote);
+    await _votingService.addVote(vote);
 
     Navigator.of(context).pop(widget.student.name);
   }
@@ -107,7 +107,7 @@ class _AttributeVotingScreenState extends State<AttributeVotingScreen> {
                 final attribute = attributeDetails[index];
                 final points = _attributePoints[attribute.name]!;
 
-                final canIncrement = points < 2 && _remainingPoints > 0;
+                final canIncrement = _remainingPoints > 0;
                 final canDecrement = points > 0;
 
                 return Card(

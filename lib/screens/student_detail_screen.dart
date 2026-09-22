@@ -3,14 +3,14 @@ import 'package:grademehard_app/domain/student.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grademehard_app/screens/attributes_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:grademehard_app/screens/student_discussion_screen.dart'; // Import the new discussion screen
+import 'package:grademehard_app/screens/student_discussion_screen.dart';
+import 'package:grademehard_app/services/voting_service.dart';
 
 class StudentDetailScreen extends StatelessWidget {
   final Student student;
 
   const StudentDetailScreen({super.key, required this.student});
 
-  // Helper function to map attribute names to icons
   IconData _getIconForAttribute(String attribute) {
     final detail = attributeDetails.firstWhere(
       (d) => d.name == attribute,
@@ -19,7 +19,6 @@ class StudentDetailScreen extends StatelessWidget {
     return detail.icon;
   }
 
-  // Helper function to get attribute description
   String _getAttributeDescription(String attributeName) {
     final detail = attributeDetails.firstWhere(
       (d) => d.name == attributeName,
@@ -31,7 +30,13 @@ class StudentDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final attributes = student.attributes.entries.toList();
+    final votingService = VotingService();
+    final votedAttributes = votingService.getAverageAttributes(student.name);
+    final attributes = votedAttributes.isNotEmpty
+        ? votedAttributes.entries.toList()
+        : student.attributes.entries.toList();
+    final totalScore = votingService.getStudentTotalScore(student.name);
+    final displayScore = totalScore > 0 ? totalScore : student.totalScore;
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +52,6 @@ class StudentDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Character Image with Rank
             Center(
               child: Stack(
                 children: [
@@ -81,6 +85,23 @@ class StudentDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 16),
+            Text(
+              'Score: $displayScore',
+              style: GoogleFonts.cinzel(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.secondary,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${votingService.getVotesForStudent(student.name).length} votos recebidos',
+              style: TextStyle(
+                fontSize: 14,
+                color: theme.colorScheme.onSurface.withOpacity(0.6),
+              ),
+            ),
             const SizedBox(height: 24),
             Text(
               'Atributos',
@@ -91,7 +112,6 @@ class StudentDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            // Attributes List
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -102,6 +122,7 @@ class StudentDetailScreen extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 final attribute = attributes[index];
+                final maxScore = 10;
                 return Tooltip(
                   message: _getAttributeDescription(attribute.key),
                   child: Row(
@@ -125,7 +146,7 @@ class StudentDetailScreen extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: LinearProgressIndicator(
-                          value: attribute.value / 2.0,
+                          value: (attribute.value / maxScore).clamp(0.0, 1.0),
                           backgroundColor: Colors.grey.withOpacity(0.3),
                           valueColor: AlwaysStoppedAnimation<Color>(
                             theme.colorScheme.secondary,
@@ -135,7 +156,7 @@ class StudentDetailScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 16),
                       Text(
-                        '${attribute.value}/2',
+                        '${attribute.value}',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

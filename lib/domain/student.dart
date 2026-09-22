@@ -1,6 +1,5 @@
-// lib/student.dart
-
-import 'package:grademehard_app/domain/rank.dart'; // Import the new Rank enum
+import 'package:grademehard_app/domain/rank.dart';
+import 'package:grademehard_app/services/voting_service.dart';
 
 class Student {
   final String name;
@@ -13,13 +12,19 @@ class Student {
     required this.attributes,
   });
 
-  // Getter to calculate the total score from attributes
   int get totalScore {
+    final votedScore = VotingService().getStudentTotalScore(name);
+    if (votedScore > 0) return votedScore;
     return attributes.values.fold(0, (sum, element) => sum + element);
   }
 
-  // Getter to determine rank based on total score
   String get rank {
     return Rank.fromScore(totalScore.toDouble()).name;
+  }
+
+  Map<String, int> get effectiveAttributes {
+    final voted = VotingService().getAverageAttributes(name);
+    if (voted.isNotEmpty) return voted;
+    return attributes;
   }
 }

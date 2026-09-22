@@ -8,6 +8,7 @@ import 'package:grademehard_app/domain/student.dart';
 import 'package:grademehard_app/widgets/student_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grademehard_app/services/voting_service.dart';
 
 class RankingScreen extends StatelessWidget {
   const RankingScreen({super.key});
@@ -23,9 +24,15 @@ class RankingBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Sort students by total score in descending order
+    final votingService = VotingService();
+
+    // Sort students by voted score in descending order
     final sortedStudents = List<Student>.from(mockStudents)
-      ..sort((a, b) => b.totalScore.compareTo(a.totalScore));
+      ..sort((a, b) {
+        final scoreA = votingService.getStudentTotalScore(a.name);
+        final scoreB = votingService.getStudentTotalScore(b.name);
+        return scoreB.compareTo(scoreA);
+      });
 
     final top5Students = sortedStudents.take(5).toList();
     final remainingStudents = sortedStudents.skip(5).toList();

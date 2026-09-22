@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grademehard_app/screens/season_start_screen.dart';
+import 'package:grademehard_app/services/auth_service.dart';
+import 'package:grademehard_app/services/voting_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AuthService().init();
+  await VotingService().init();
   runApp(const MyApp());
 }
 
