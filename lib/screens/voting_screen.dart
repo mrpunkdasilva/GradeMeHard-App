@@ -33,6 +33,7 @@ class _VotingScreenState extends State<VotingScreen> {
 
   void _showLoginDialog(Student student) {
     final nameController = TextEditingController();
+    final emailController = TextEditingController();
     final passController = TextEditingController();
     bool isSignup = false;
     bool obscurePass = true;
@@ -98,6 +99,18 @@ class _VotingScreenState extends State<VotingScreen> {
                     ),
                     const SizedBox(height: 16),
                     TextField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: const Icon(Icons.email_outlined),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
                       controller: passController,
                       obscureText: obscurePass,
                       decoration: InputDecoration(
@@ -119,8 +132,9 @@ class _VotingScreenState extends State<VotingScreen> {
                       child: ElevatedButton(
                         onPressed: () async {
                           final name = nameController.text.trim();
+                          final email = emailController.text.trim();
                           final pass = passController.text.trim();
-                          if (name.isEmpty || pass.isEmpty) {
+                          if (name.isEmpty || email.isEmpty || pass.isEmpty) {
                             ScaffoldMessenger.of(ctx).showSnackBar(
                               const SnackBar(content: Text('Preencha todos os campos'), backgroundColor: Colors.red),
                             );
@@ -129,10 +143,10 @@ class _VotingScreenState extends State<VotingScreen> {
 
                           bool success;
                           if (isSignup) {
-                            success = await _auth.signup(name, pass);
+                            success = await _auth.signup(name, email, pass);
                             if (!success && mounted) {
                               ScaffoldMessenger.of(ctx).showSnackBar(
-                                const SnackBar(content: Text('Nome já cadastrado'), backgroundColor: Colors.red),
+                                const SnackBar(content: Text('Nome ou email já cadastrado'), backgroundColor: Colors.red),
                               );
                               return;
                             }
@@ -140,7 +154,7 @@ class _VotingScreenState extends State<VotingScreen> {
                             success = await _auth.login(name, pass);
                             if (!success && mounted) {
                               ScaffoldMessenger.of(ctx).showSnackBar(
-                                const SnackBar(content: Text('Nome ou senha incorretos'), backgroundColor: Colors.red),
+                                const SnackBar(content: Text('Nome/email ou senha incorretos'), backgroundColor: Colors.red),
                               );
                               return;
                             }
